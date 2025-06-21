@@ -1,0 +1,172 @@
+-- 1. Departments
+CREATE TABLE Departments (
+  dept_id   INT PRIMARY KEY,
+  name      VARCHAR(50) UNIQUE,
+  location  VARCHAR(100)
+);
+
+INSERT INTO Departments VALUES
+  (10, 'Human Resources',        'New York'),
+  (20, 'Information Technology', 'Chicago'),
+  (30, 'Finance',                'San Francisco'),
+  (40, 'Marketing',              'London'),
+  (50, 'Sales',                  'Berlin');
+
+-- 2. Jobs
+CREATE TABLE Jobs (
+  job_id     INT PRIMARY KEY,
+  title      VARCHAR(100),
+  min_salary DECIMAL(8,2),
+  max_salary DECIMAL(8,2)
+);
+
+INSERT INTO Jobs VALUES
+  (101, 'HR Manager',             60000.00,  90000.00),
+  (102, 'IT Analyst',             50000.00,  80000.00),
+  (103, 'Finance Analyst',        55000.00,  85000.00),
+  (104, 'Marketing Coordinator',  45000.00,  70000.00),
+  (105, 'Sales Representative',   40000.00,  75000.00),
+  (106, 'Project Manager',        70000.00, 120000.00),
+  (107, 'Data Scientist',         80000.00, 130000.00);
+
+-- 3. Employees
+CREATE TABLE Employees (
+  emp_id      INT PRIMARY KEY,
+  first_name  VARCHAR(50),
+  last_name   VARCHAR(50),
+  email       VARCHAR(100) UNIQUE,
+  dept_id     INT,
+  job_id      INT,
+  manager_id  INT,
+  hire_date   DATE,
+  CONSTRAINT fk_emp_dept     FOREIGN KEY (dept_id)    REFERENCES Departments(dept_id),
+  CONSTRAINT fk_emp_job      FOREIGN KEY (job_id)     REFERENCES Jobs(job_id),
+  CONSTRAINT fk_emp_manager  FOREIGN KEY (manager_id) REFERENCES Employees(emp_id)
+);
+
+INSERT INTO Employees VALUES
+  (1,  'Alice', 'Morgan',  'alice.morgan@company.com', 20, 106, NULL, '2023-01-15'),
+  (2,  'Bob',   'Smith',   'bob.smith@company.com',     20, 102, 1,    '2023-03-22'),
+  (3,  'Carla', 'Diaz',    'carla.diaz@company.com',    10, 101, 1,    '2023-02-10'),
+  (4,  'David', 'Lee',     'david.lee@company.com',     30, 103, 1,    '2023-04-18'),
+  (5,  'Eva',   'Chen',    'eva.chen@company.com',      40, 104, 1,    '2023-05-05'),
+  (6,  'Frank', 'Wright',  'frank.wright@company.com',  50, 105, 1,    '2023-06-12'),
+  (7,  'Grace', 'Khan',    'grace.khan@company.com',    20, 107, 2,    '2024-01-20'),
+  (8,  'Hector','Gomez',   'hector.gomez@company.com',  30, 103, 4,    '2024-02-25'),
+  (9,  'Ivy',   'Patel',   'ivy.patel@company.com',     10, 101, 3,    '2024-03-30'),
+  (10, 'Jake',  'O’Brien', 'jake.obrien@company.com',   40, 104, 5,    '2024-04-15'),
+  (11, 'Lina',  'Nguyen',  'lina.nguyen@company.com',   50, 105, 6,    '2024-05-22'),
+  (12, 'Mike',  'Zhang',   'mike.zhang@company.com',    20, 102, 2,    '2025-01-10'),
+  (13, 'Nina',  'Brown',   'nina.brown@company.com',    30, 103, 4,    '2025-03-01'),
+  (14, 'Oscar', 'Davis',   'oscar.davis@company.com',   50, 105, 6,    '2025-04-18'),
+  (15, 'Pam',   'Garcia',  'pam.garcia@company.com',    40, 104, 5,    '2025-05-30');
+
+-- 4. Salaries (salary history)
+CREATE TABLE Salaries (
+  salary_id      INT PRIMARY KEY,
+  emp_id         INT,
+  salary         DECIMAL(8,2),
+  effective_date DATE,
+  CONSTRAINT fk_sal_emp FOREIGN KEY (emp_id) REFERENCES Employees(emp_id),
+  CHECK (salary > 0)
+);
+
+INSERT INTO Salaries VALUES
+  (201, 1,  95000.00, '2023-01-15'),
+  (202, 1, 105000.00, '2024-01-15'),
+  (203, 2,  60000.00, '2023-03-22'),
+  (204, 3,  75000.00, '2023-02-10'),
+  (205, 4,  65000.00, '2023-04-18'),
+  (206, 5,  55000.00, '2023-05-05'),
+  (207, 6,  50000.00, '2023-06-12'),
+  (208, 7,  90000.00, '2024-01-20'),
+  (209, 8,  70000.00, '2024-02-25'),
+  (210, 9,  70000.00, '2024-03-30'),
+  (211,10, 55000.00, '2024-04-15'),
+  (212,11, 48000.00, '2024-05-22'),
+  (213,12, 65000.00, '2025-01-10'),
+  (214,13, 68000.00, '2025-03-01'),
+  (215,14, 52000.00, '2025-04-18'),
+  (216,15, 60000.00, '2025-05-30');
+
+-- 5. Projects
+CREATE TABLE Projects (
+  project_id    INT PRIMARY KEY,
+  project_name  VARCHAR(100),
+  start_date    DATE,
+  end_date      DATE,
+  budget        DECIMAL(10,2) CHECK (budget > 0)
+);
+
+INSERT INTO Projects VALUES
+  (301, 'Website Redesign',    '2023-02-01', '2023-06-30',  50000.00),
+  (302, 'ERP Implementation',  '2023-07-01', '2024-01-31', 150000.00),
+  (303, 'Market Analysis',     '2024-02-15', NULL,         30000.00),
+  (304, 'Cloud Migration',     '2024-03-01', '2024-12-31', 120000.00),
+  (305, 'New Product Launch',  '2024-05-01', '2025-03-31', 200000.00),
+  (306, 'AI Research Pilot',   '2025-01-15', NULL,         80000.00);
+
+-- 6. EmployeeProjects (many-to-many)
+CREATE TABLE EmployeeProjects (
+  ep_id           INT PRIMARY KEY,
+  emp_id          INT,
+  project_id      INT,
+  role            VARCHAR(50),
+  allocation_pct  INT,
+  CONSTRAINT fk_ep_emp  FOREIGN KEY (emp_id)     REFERENCES Employees(emp_id),
+  CONSTRAINT fk_ep_proj FOREIGN KEY (project_id) REFERENCES Projects(project_id),
+  CHECK (allocation_pct BETWEEN 1 AND 100)
+);
+
+INSERT INTO EmployeeProjects VALUES
+  (401,  1, 301, 'Project Manager',       30),
+  (402,  2, 301, 'IT Analyst',            50),
+  (403,  3, 302, 'HR Manager',            20),
+  (404,  4, 302, 'Finance Analyst',       40),
+  (405,  5, 303, 'Marketing Coordinator', 60),
+  (406,  6, 304, 'Sales Representative',  70),
+  (407,  7, 304, 'Data Scientist',        40),
+  (408,  8, 305, 'Finance Analyst',       30),
+  (409,  9, 305, 'HR Manager',            25),
+  (410, 10, 305, 'Marketing Coordinator', 35),
+  (411, 11, 306, 'Sales Representative',  50),
+  (412, 12, 306, 'IT Analyst',            45),
+  (413, 13, 303, 'Finance Analyst',       35),
+  (414, 14, 303, 'Sales Representative',  20),
+  (415, 15, 306, 'Marketing Coordinator', 40);
+
+Easy
+
+Employee Directory
+List each employee’s emp_id, full name (first_name + last_name), email, and their department name.
+
+High-Paying Jobs
+Find all job titles (title) where the max_salary is greater than 100 000.
+
+Ongoing Projects
+Retrieve the project_id, project_name, start_date, and budget for projects whose end_date is NULL.
+
+Medium
+
+Headcount by Department
+For each department, show its dept_id, name, and the total number of employees in that department.
+
+Current Salaries
+For every employee, find their most recent salary (i.e. the salary from the latest effective_date in Salaries). Return emp_id, full name, and that current salary.
+
+Managerless Employees
+List emp_id, full name, and department name for employees who do not have a manager (manager_id IS NULL).
+
+Project Assignments
+For each project, show its project_name and the count of distinct employees assigned to it in EmployeeProjects.
+
+Hard
+
+Top-Funded Ongoing Projects
+Rank ongoing projects (where end_date IS NULL) by their budget using a window function. Return project_id, project_name, budget, and RANK() OVER (ORDER BY budget DESC).
+
+Above-Average Earners
+Identify employees whose current salary (as in Q5) exceeds the average current salary within their department. Return full name, department name, current salary, and department average salary.
+
+Departmental Budget Allocation
+Calculate, for each department, the total “effective budget” allocated via employees’ project assignments. For each EmployeeProjects row, compute (budget_of_project * allocation_pct / 100), sum these per department, and return dept_id, name, and that total allocation.
