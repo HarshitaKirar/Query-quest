@@ -1,0 +1,171 @@
+-- 1. Participants
+CREATE TABLE Participants (
+  participant_id   INT PRIMARY KEY,
+  first_name       VARCHAR(50),
+  last_name        VARCHAR(50),
+  email            VARCHAR(100) UNIQUE,
+  join_date        DATE
+);
+
+INSERT INTO Participants VALUES
+(1,  'Alice',   'Wong',    'alice.wong@example.com',   '2025-01-10'),
+(2,  'Bob',     'Smith',   'bob.smith@example.com',     '2025-02-05'),
+(3,  'Carla',   'Diaz',    'carla.diaz@example.com',    '2025-02-20'),
+(4,  'David',   'Li',      'david.li@example.com',      '2025-03-01'),
+(5,  'Eva',     'Johnson', 'eva.johnson@example.com',   '2025-03-12'),
+(6,  'Frank',   'Miller',  'frank.miller@example.com',  '2025-03-20'),
+(7,  'Grace',   'Kim',     'grace.kim@example.com',     '2025-04-02'),
+(8,  'Hector',  'Nguyen',  'hector.nguyen@example.com', '2025-04-18'),
+(9,  'Ivy',     'Patel',   'ivy.patel@example.com',     '2025-05-05'),
+(10, 'Jake',    'O’Brien', 'jake.obrien@example.com',   '2025-05-15'),
+(11, 'Lina',    'Zhang',   'lina.zhang@example.com',    '2025-05-22'),
+(12, 'Mike',    'Chen',    'mike.chen@example.com',     '2025-05-30'),
+(13, 'Nina',    'Brown',   'nina.brown@example.com',    '2025-06-05'),
+(14, 'Oscar',   'Davis',   'oscar.davis@example.com',   '2025-06-10'),
+(15, 'Pam',     'Garcia',  'pam.garcia@example.com',    '2025-06-18');
+
+-- 2. Workshops
+CREATE TABLE Workshops (
+  workshop_id    INT PRIMARY KEY,
+  title          VARCHAR(100),
+  speaker        VARCHAR(100),
+  workshop_date  DATE,
+  duration_mins  INT,
+  capacity       INT
+);
+
+INSERT INTO Workshops VALUES
+(101, 'Intro to SQL',            'Dr. Alan Turing',   '2025-07-01',  90, 50),
+(102, 'Advanced Window Functions','Prof. Ada Lovelace','2025-07-01', 120, 40),
+(103, 'Data Modeling 101',       'Elena Gilbert',     '2025-07-02',  60, 60),
+(104, 'Indexing & Performance',  'Tim Berners-Lee',   '2025-07-02',  75, 45),
+(105, 'Transactions & Locks',    'Grace Hopper',      '2025-07-03',  90, 50),
+(106, 'JSON & Unstructured',     'Linus Torvalds',    '2025-07-03',  60, 35),
+(107, 'Securing Your Database',  'Shafi Goldwasser',  '2025-07-04',  80, 30),
+(108, 'Cloud SQL Best Practices','Satya Nadella',     '2025-07-04', 100, 50);
+
+-- 3. Registrations
+CREATE TABLE Registrations (
+  registration_id   INT PRIMARY KEY,
+  participant_id    INT,
+  workshop_id       INT,
+  registration_date DATE,
+  attended          BOOLEAN,
+  CONSTRAINT fk_participant
+    FOREIGN KEY(participant_id) REFERENCES Participants(participant_id),
+  CONSTRAINT fk_workshop
+    FOREIGN KEY(workshop_id) REFERENCES Workshops(workshop_id)
+);
+
+INSERT INTO Registrations VALUES
+(1001, 1,  101, '2025-06-20', TRUE),
+(1002, 2,  101, '2025-06-21', FALSE),
+(1003, 3,  102, '2025-06-22', TRUE),
+(1004, 4,  103, '2025-06-23', TRUE),
+(1005, 5,  104, '2025-06-24', FALSE),
+(1006, 6,  105, '2025-06-25', TRUE),
+(1007, 7,  106, '2025-06-26', TRUE),
+(1008, 8,  107, '2025-06-27', FALSE),
+(1009, 9,  108, '2025-06-28', TRUE),
+(1010, 10, 101, '2025-06-29', TRUE),
+(1011, 11, 102, '2025-06-30', FALSE),
+(1012, 12, 103, '2025-07-01', TRUE),
+(1013, 13, 104, '2025-07-01', TRUE),
+(1014, 14, 105, '2025-07-02', FALSE),
+(1015, 15, 106, '2025-07-02', TRUE),
+(1016, 1,  107, '2025-07-03', TRUE),
+(1017, 2,  108, '2025-07-03', FALSE),
+(1018, 3,  103, '2025-07-04', TRUE),
+(1019, 4,  104, '2025-07-04', TRUE),
+(1020, 5,  105, '2025-07-04', FALSE);
+
+-- 4. Payments
+CREATE TABLE Payments (
+  payment_id      INT PRIMARY KEY,
+  participant_id  INT,
+  amount          DECIMAL(7,2),
+  payment_date    DATE,
+  method          VARCHAR(20),
+  CONSTRAINT fk_pay_participant
+    FOREIGN KEY(participant_id) REFERENCES Participants(participant_id)
+);
+
+INSERT INTO Payments VALUES
+(5001, 1,  150.00, '2025-06-20', 'Credit Card'),
+(5002, 2,  150.00, '2025-06-21', 'PayPal'),
+(5003, 3,  200.00, '2025-06-22', 'Credit Card'),
+(5004, 4,  100.00, '2025-06-23', 'Cash'),
+(5005, 5,  120.00, '2025-06-24', 'Credit Card'),
+(5006, 6,  150.00, '2025-06-25', 'Debit Card'),
+(5007, 7,  100.00, '2025-06-26', 'PayPal'),
+(5008, 8,  200.00, '2025-06-27', 'Credit Card'),
+(5009, 9,  150.00, '2025-06-28', 'Credit Card'),
+(5010, 10, 100.00, '2025-06-29', 'Cash'),
+(5011, 11, 200.00, '2025-06-30', 'Debit Card'),
+(5012, 12, 150.00, '2025-07-01', 'Credit Card'),
+(5013, 13, 120.00, '2025-07-01', 'PayPal'),
+(5014, 14, 180.00, '2025-07-02', 'Credit Card'),
+(5015, 15, 100.00, '2025-07-02', 'Debit Card');
+
+-- 5. Feedback
+CREATE TABLE Feedback (
+  feedback_id     INT PRIMARY KEY,
+  participant_id  INT,
+  workshop_id     INT,
+  rating          INT CHECK (rating BETWEEN 1 AND 5),
+  comments        TEXT,
+  feedback_date   DATE,
+  CONSTRAINT fk_fb_participant
+    FOREIGN KEY(participant_id) REFERENCES Participants(participant_id),
+  CONSTRAINT fk_fb_workshop
+    FOREIGN KEY(workshop_id) REFERENCES Workshops(workshop_id)
+);
+
+INSERT INTO Feedback VALUES
+(9001,  1, 101, 5, 'Great intro, very clear!',         '2025-07-02'),
+(9002,  3, 102, 4, 'Helpful but a bit fast-paced.',    '2025-07-03'),
+(9003,  4, 103, 5, 'Loved the examples!',              '2025-07-03'),
+(9004,  6, 105, 3, 'Too many details on locking.',     '2025-07-04'),
+(9005,  7, 106, 4, 'JSON part was insightful.',         '2025-07-04'),
+(9006,  9, 108, 5, 'Great cloud tips and demos.',       '2025-07-05'),
+(9007, 10, 101, 2, 'Could use more hands-on exercises.','2025-07-02'),
+(9008, 12, 103, 4, 'Solid session overall.',            '2025-07-04'),
+(9009, 13, 104, 3, 'Indexing topic was too brief.',    '2025-07-05'),
+(9010, 15, 106, 5, 'Excellent speaker!',               '2025-07-05');
+
+
+Easy
+
+List all participants
+Retrieve each participant’s full name (first_name, last_name) and email.
+
+Workshops by capacity
+Find the title and speaker of all workshops where capacity > 45.
+
+Registration details
+Show every registration’s registration_id, the participant’s full name, the workshop title, and the attended flag.
+
+Medium
+
+Revenue per participant
+For each participant, calculate the total amount they’ve paid. Return participant full name and SUM(amount) from Payments, ordered by total descending.
+
+Workshop attendance summary
+For each workshop, list its title, total registrations (COUNT(*)), and number of attendances (SUM(CASE WHEN attended THEN 1 ELSE 0 END)).
+
+Non-attendees
+List the full names and emails of participants who registered for at least one workshop but never attended any (i.e., all their attended flags = FALSE).
+
+Average feedback rating
+Compute each workshop’s average rating and show only those with an average ≥ 4. Include workshop_id, title, and AVG(rating).
+
+Hard
+
+Participant ranking
+Use a window function to rank participants by the number of workshops they attended (highest first). Break ties by earliest join_date. Return RANK() OVER (…) AS rank, full name, and attended count.
+
+Above-average payers
+Find participants whose total paid amount (from Payments) exceeds the overall average payment per participant. Return full name and their total paid.
+
+Under-feedbacked workshops
+Identify workshops where the count of feedback entries is less than half of its capacity. Return workshop_id, title, capacity, feedback count, and feedback-to-capacity ratio.
