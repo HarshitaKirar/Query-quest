@@ -66,7 +66,7 @@ To submit your final project, you'll open a **Pull Request (PR)** to this reposi
 Copy
 Edit
 git add .
-git commit -m "Final project submission - Arushi Malhotra"
+git commit -m "Final project submission - (name & email)"
 git push origin main
 ```
 
@@ -82,8 +82,7 @@ git push origin main
 
 ### 🏁 Share Your Progress on LinkedIn
 
-Copy this and share your final week experience:
-
+Because, why would you not show off that you're upskilling?
 
 ---
 
@@ -102,7 +101,7 @@ If you're new to SQL or want to brush up, check out these resources:
 Need help or stuck on something?
 
 - Ask questions in our [Discord Server](https://discord.gg/MSTNyRSPYW), under the `#queryquest-help` channel.
-- Tag a mentor if needed — we’re here to support you!
+- Tag a mentor if needed. We’re here to support you!
 
 ---
 
@@ -120,7 +119,7 @@ Use this template to share weekly updates on LinkedIn and tag us with **#QueryQu
 By participating, you can earn:
 - 📜 Certificates
 - 🗣️ Shoutouts on Social Media
-- 🎓 1:1 mentorship with Arushi & Kushagra
+- 🎓 1:1 mentorship with Arushi(Founder) & Kushagra (Co-Founder)
 
 💡 *Winner Criteria:*  
 Top of leaderboard, working project, and original (non-AI generated) code.
@@ -128,5 +127,4 @@ Top of leaderboard, working project, and original (non-AI generated) code.
 ---
 
 Happy querying!  
-— The QueryQuest Team 💻  
-*Powered by Code Social*
+— Team Code Social💻 
