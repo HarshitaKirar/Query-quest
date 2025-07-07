@@ -217,38 +217,38 @@ INSERT INTO RestaurantZones VALUES
 
 ## Query Exercises
 
-### Easy
+### 1. Easy
 
-#### Active Apps
-List the name, country, and launch_date of all apps where active = TRUE.
+a. List the name, country, and launch_date of all apps where active = TRUE.
 
-#### Premium Users
-Retrieve each user_id, name, and subscription_type for users with a "PREMIUM" subscription.
+b. Retrieve each user_id, name, and subscription_type for users with a "PREMIUM" subscription.
 
-#### Available Menu Items
-Show the restaurant name, menu item name, and price for all items where available = TRUE.
+c. Show the restaurant name, menu item name, and price for all items where available = TRUE.
 
-### Medium
 
-#### Restaurant Ratings
+### 2. Medium
+
+a. Restaurant Ratings
 For each restaurant, calculate its average review rating. Return restaurant_id, restaurant name, and AVG(rating), including only restaurants with at least one review.
 
-#### Order Details
+b. Order Details
 List order_id, user name, restaurant name, courier name (if assigned), status, and total_amount for every order.
 
-#### App Revenues
+c. App Revenues
 For each app, compute the total number of orders and the total revenue (SUM(total_amount)). Return app_id, app name, order count, and total revenue, ordered by revenue descending.
 
-#### Courier Performance
+d. Courier Performance
 For each courier, find the number of orders they have delivered (status = 'DELIVERED') and their average delivery time in minutes (use TIMESTAMPDIFF between order_time and delivered_time). Return courier_id, courier name, delivered count, and avg delivery duration.
 
-### Hard
 
-#### City Ranking of Restaurants
+### 3. Hard
+
+a. City Ranking of Restaurants
 Use a window function to rank restaurants within each city by their total order count. Return city, restaurant_id, name, order_count, and RANK() OVER (PARTITION BY city ORDER BY order_count DESC).
 
-#### Never-Ordered Items
+b. Never-Ordered Items
 Identify menu items that have never been ordered. Return menu_item_id and name for items not present in OrderItems.
 
-#### Top Revenue Zone
+c. Top Revenue Zone
 Determine which delivery zone has generated the highest total order revenue. Join Orders → Restaurants → RestaurantZones → Zones, sum total_amount per zone, and return the zone name, city, and total revenue, ordering to show the top zone first.
+
