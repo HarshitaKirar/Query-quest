@@ -230,38 +230,30 @@ INSERT INTO Reviews VALUES
 
 ## Query Exercises
 
-### Easy
+### 1. Easy
+a. List each movie's title, release_date, and its director's name.
 
-#### Movie & Director
-List each movie's title, release_date, and its director's name.
+b. Retrieve all movie titles where is_original = TRUE.
 
-#### Original Content
-Retrieve all movie titles where is_original = TRUE.
+c. Show every web series' title, start_date, and seasons.
 
-#### Series Overview
-Show every web series' title, start_date, and seasons.
 
-### Medium
+### 2. Medium
 
-#### Actor Film Counts
-For each actor, count how many movies they've appeared in. Return actor_id, actor name, and movie count, ordered descending.
+a. For each actor, count how many movies they've appeared in. Return actor_id, actor name, and movie count, ordered descending.
 
-#### Genre Popularity
-For each genre, calculate how many movies belong to it. Return genre_id, name, and the movie count, including genres with zero movies.
+b. For each genre, calculate how many movies belong to it. Return genre_id, name, and the movie count, including genres with zero movies.
 
-#### Series Reviews
-Compute the average rating for each series. Show only series with at least two reviews, returning series_id, title, and average rating.
+c. Compute the average rating for each series. Show only series with at least two reviews, returning series_id, title, and average rating.
 
-#### Episode Listing
-List all episodes of "Breaking Bad" (series_id = 101), showing season_number, episode_number, title, and air_date, ordered by season and episode.
+d. List all episodes of "Breaking Bad" (series_id = 101), showing season_number, episode_number, title, and air_date, ordered by season and episode.
 
-### Hard
 
-#### Top-Rated Movies
-Use a window function to rank movies by their average review rating (highest first). Return movie_id, title, average_rating, and rank.
+### 3. Hard
 
-#### Cross-Type Top Content
-Combine movies and series into one list (using UNION) of content_type ('MOVIE'/'SERIES'), title, and average rating, then select only those with average ≥ 9.0.
+a. Use a window function to rank movies by their average review rating (highest first). Return movie_id, title, average_rating, and rank.
 
-#### Director Impact
-For each director, compute the average rating across all their movies, and list only those with an average ≥ 8.5. Return director name and their average movie rating.
+b. Combine movies and series into one list (using UNION) of content_type ('MOVIE'/'SERIES'), title, and average rating, then select only those with average ≥ 9.0.
+
+c. For each director, compute the average rating across all their movies, and list only those with an average ≥ 8.5. Return director name and their average movie rating.
+
