@@ -202,38 +202,33 @@ INSERT INTO Sales VALUES
 
 ## Query Exercises
 
-### Easy
+### 1. Easy
 
-#### List all biryani varieties
-Retrieve each variety's biryani_id, name, region, and whether it's vegetarian (vegetarian).
+a. Retrieve each variety's biryani_id, name, region, and whether it's vegetarian (vegetarian).
 
-#### Spicy non-veg biryanis
+b. Spicy non-veg biryanis
 Find the name and spice_level of all biryanis where vegetarian = FALSE and spice_level ≥ 7.
 
-#### Available menu items
+c. Available menu items
 Show each restaurant's name and the name of biryanis they offer where available = TRUE.
 
-### Medium
 
-#### Ingredient counts per recipe
-For each biryani variety, count how many distinct ingredients it uses. Return biryani_id, name, and the ingredient count.
+### 2. Medium
 
-#### Total sales by biryani
-Calculate total quantity_sold and total total_amount for each biryani across all restaurants. Return biryani_id, name, sum of quantity_sold, and sum of total_amount, ordered by quantity descending.
+a. For each biryani variety, count how many distinct ingredients it uses. Return biryani_id, name, and the ingredient count.
 
-#### Average rating per restaurant
-For each restaurant, compute the average rating from Reviews, and show only those with an average ≥ 4. Include restaurant_id, name, and AVG(rating).
+b. Calculate total quantity_sold and total total_amount for each biryani across all restaurants. Return biryani_id, name, sum of quantity_sold, and sum of total_amount, ordered by quantity descending.
 
-#### Allergen alert
-List all biryani varieties (name) that include at least one allergen ingredient (is_allergen = TRUE).
+c. For each restaurant, compute the average rating from Reviews, and show only those with an average ≥ 4. Include restaurant_id, name, and AVG(rating).
 
-### Hard
+d. List all biryani varieties (name) that include at least one allergen ingredient (is_allergen = TRUE).
 
-#### Top-selling biryanis by month
-For each month in 2025, find the biryani (biryani_id, name) with the highest quantity_sold. Use window functions to partition by month and rank by quantity_sold, then pick rank = 1.
 
-#### Sales vs. menu price variance
-Identify any menu entries where the average sale price (total_amount/quantity_sold) differs by more than 10% from the listed price in Menu. Return restaurant_id, biryani_id, price, average sale price, and the percentage difference.
+### 3. Hard
 
-#### Seasonal review trends
-Compare average ratings for each biryani between "summer" (June–August) and "winter" (December–February) 2025. Return biryani_id, name, avg rating in summer, avg rating in winter, and the difference.
+a. For each month in 2025, find the biryani (biryani_id, name) with the highest quantity_sold. Use window functions to partition by month and rank by quantity_sold, then pick rank = 1.
+
+b. Identify any menu entries where the average sale price (total_amount/quantity_sold) differs by more than 10% from the listed price in Menu. Return restaurant_id, biryani_id, price, average sale price, and the percentage difference.
+
+c. Compare average ratings for each biryani between "summer" (June–August) and "winter" (December–February) 2025. Return biryani_id, name, avg rating in summer, avg rating in winter, and the difference.
+
